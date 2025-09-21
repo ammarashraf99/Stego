@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cxxopts.hpp>
 #include "image.hpp"
+#include "test_image.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -30,41 +31,8 @@ int main(int argc, char* argv[])
 	std::string mode   = result["mode"].as<std::string>();
 
 
-	// cv::Mat image = cv::imread(input); // don't need the alpha channel
-	// std::println("depth is {}", [](int en){
-	// 	switch (en) {
-	// 	case CV_8U:
-	// 	case CV_8S:
-	// 		return 8;
-	// 	case CV_16U:
-	// 	case CV_16S:
-	// 		return 16;
-	// 	case CV_32S:
-	// 	case CV_32F:
-	// 		return 32;
-	// 	default:
-	// 		return -1;
-			
-	// 	}
-	// }(image.depth()));
+	Image img(input);
+	TestProcessImage test_image(img, output);
+	test_image.test_compare(input, output);
 
-	// std::println("channels are {}", image.channels());
-	// std::println("rows are {}", image.rows);
-	// std::println("cols are {}", image.cols);
-
-	// cv::Vec3b nigga; // b byte, d double, f float, w word
-
-	// cv::Vec3b pixel = img.at<cv::Vec3b>(20, 10); // (y, x)
-	//    std::cout << "Pixel(10,20): B=" << (int)pixel[0]
-	//              << " G=" << (int)pixel[1]
-	//              << " R=" << (int)pixel[2] << "\n";
-
-
-
-
-	/** show an image **/
-	// cv::namedWindow("Image");
-	// cv::imshow("Image", image);
-	// cv::waitKey(0);
-	// cv::destroyWindow("Image");
 }

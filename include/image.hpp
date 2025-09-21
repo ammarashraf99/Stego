@@ -3,7 +3,6 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-template <typename T>
 class Image {
 public:
 	Image(const std::string& path);
@@ -16,8 +15,13 @@ public:
 	
 	int width() const;
 	int height() const;
+	int depth() const;
+	int channels() const;
 private:
+	cv::Mat _mat;
 	int _width;
 	int _height; 
-	cv::Mat _mat;
+	// std::pair<int, int> _depth_channel;
+	int _depth;
+	int _channels;
 };
