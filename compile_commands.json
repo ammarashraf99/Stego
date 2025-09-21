@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/ammar/programming/data-hiding/build",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -std=gnu++17 -o CMakeFiles/stego.dir/src/main.cpp.o -c /home/ammar/programming/data-hiding/src/main.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/main.cpp",
+  "output": "CMakeFiles/stego.dir/src/main.cpp.o"
+}
+]
