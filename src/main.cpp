@@ -33,6 +33,6 @@ int main(int argc, char* argv[])
 
 	Image img(input);
 	TestProcessImage test_image(img, output);
-	test_image.test_compare(input, output);
+
 
 }
