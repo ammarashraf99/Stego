@@ -1,5 +1,6 @@
 #pragma once
 #include "embedder.hpp"
+#include <print>
 
 class LSB_Embedder : public Embedder{
 public:

@@ -23,6 +23,8 @@ add_executable(stego
   src/lsb_embedder.cpp
   )
 
+add_compile_options(-ggdb)
+
 find_package(OpenCV REQUIRED)
 
 # Link against cxxopts
