@@ -10,5 +10,11 @@
   "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -std=gnu++23 -o CMakeFiles/stego.dir/src/image.cpp.o -c /home/ammar/programming/data-hiding/src/image.cpp",
   "file": "/home/ammar/programming/data-hiding/src/image.cpp",
   "output": "CMakeFiles/stego.dir/src/image.cpp.o"
+},
+{
+  "directory": "/home/ammar/programming/data-hiding/build",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -std=gnu++23 -o CMakeFiles/stego.dir/src/lsb_embedder.cpp.o -c /home/ammar/programming/data-hiding/src/lsb_embedder.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/lsb_embedder.cpp",
+  "output": "CMakeFiles/stego.dir/src/lsb_embedder.cpp.o"
 }
 ]
