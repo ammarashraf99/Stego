@@ -1,7 +1,5 @@
 #include "image.hpp"
-#include <opencv2/core/hal/interface.h>
-#include <opencv2/core/matx.hpp>
-#include <opencv2/imgcodecs.hpp>
+#include <print>
 
 Image::Image(const std::string& path)
 {
@@ -12,6 +10,9 @@ Image::Image(const std::string& path)
 
 	_width = _mat.cols;
 	_height = _mat.rows;
+
+	std::println("width is {}", _width);
+	std::println("height is {}", _height);
 
 	_depth = [](int en) {
 		switch (en) {
@@ -27,35 +28,48 @@ Image::Image(const std::string& path)
 	}(_mat.depth());
 
 	_channels = _mat.channels();
+	if (_channels != 3) {
+		std::println("Can't supprot image format");
+		std::abort();
+	}
 }
 
 
-const cv::Mat& Image::mat() const
+void Image::save(const std::string& file_path) const 
+{
+	bool success = cv::imwrite(file_path, this->mat());
+	if (!success) {
+		throw "Error saving file";
+	}
+}
+
+
+const cv::Mat& Image::mat() const noexcept
 {
 	return _mat;
 }
 
-cv::Mat& Image::mat()
+cv::Mat& Image::mat() noexcept
 {
 	return _mat;
 }
 
-int Image::width() const
+int Image::width() const noexcept
 {
 	return _width;
 }
 
-int Image::height() const
+int Image::height() const noexcept
 {
 	return _height;
 }
 
-int Image::depth() const 
+int Image::depth() const noexcept
 {
 	return _depth;
 }
 
-int Image::channels() const 
+int Image::channels() const noexcept
 {
 	return _channels;
 }

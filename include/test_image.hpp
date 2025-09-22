@@ -9,7 +9,7 @@ public:
 	{
 		for (int y {}; y < img.height(); ++y) {
 			for (int x {}; x < img.width(); ++x) {
-				img.mat().at<cv::Vec3b>(y, x)[1] = 0; // blue pixel is zerod
+				img.mat().at<cv::Vec3b>(y, x)[2] = 0; // blue pixel is zerod
 			}
 		}
 		bool success = cv::imwrite(output, img.mat());
