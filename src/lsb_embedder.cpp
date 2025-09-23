@@ -15,6 +15,11 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 {
 	std::pair<int, int> pos {}; // height, width
 	bool bit_is_set{};
+	std::println("file has:");
+	for (auto x: data) {
+		std::print("{}", static_cast<char>(x));
+	}
+	std::println("");
 	
 	for (auto& byte: data) {
 		for (int i {7}; i >= 0; --i) {
@@ -33,20 +38,19 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 {
 	std::vector<uint8_t> payload;
-	payload.reserve(30);
-	std::pair<int, int> pos{};
+	std::pair<int, int> pos {};
 	bool bit_is_set {};
-	for (int j {}; j < 100; ++j) {
+
+	for (int j {}; j < 20; ++j) {
 		uint8_t byte {};
-		for (size_t i {7}; i >= 0; --i) {
+		for (int i {7}; i >= 0; --i) {
 			byte = (byte << 1);
-			bit_is_set = (img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%3] >> i) & 1;
+			bit_is_set = img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%3] & 1;
 			if (bit_is_set) {
 				byte |= 1;
 			} else {
 				byte &= ~1;
 			}
-			std::println("pos {}, {} done.", pos.first, pos.second);
 			next_pixel(img, pos);
 		}
 		payload.push_back(byte);
