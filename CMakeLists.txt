@@ -19,6 +19,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_executable(stego
   src/main.cpp
+  src/stego.cpp
   src/image.cpp
   src/lsb_embedder.cpp
   )
