@@ -14,20 +14,31 @@ void LSB_Embedder::next_pixel(const Image& img, std::pair<int, int>& pos)
 void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 {
 	std::pair<int, int> pos {}; // height, width
+	size_t file_size { data.size() };
 	bool bit_is_set{};
-	std::println("file has:");
-	for (auto x: data) {
-		std::print("{}", static_cast<char>(x));
+
+	std::println("file size is {}", file_size);
+	
+	for (int j {sizeof(size_t)}; j >= 0; --j) { // embed size
+		uint8_t byte { static_cast<uint8_t>( file_size>>(j*7) ) };
+		for (int i {7}; i >= 0; --i) {
+			bit_is_set = (byte >> i) & 1;
+			if (bit_is_set) {
+				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] |= 1;
+			} else {
+				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] &= ~1;
+			}
+			next_pixel(img, pos);
+		}
 	}
-	std::println("");
 	
 	for (auto& byte: data) {
 		for (int i {7}; i >= 0; --i) {
 			bit_is_set = (byte >> i) & 1;
 			if (bit_is_set) {
-				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%3] |= 1; // set lsb
+				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] |= 1; // set lsb
 			} else {
-				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%3] &= ~1; // clear lsb
+				img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] &= ~1; // clear lsb
 			}
 			next_pixel(img, pos);
 		}
@@ -41,11 +52,29 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 	std::pair<int, int> pos {};
 	bool bit_is_set {};
 
-	for (int j {}; j < 20; ++j) {
+	size_t file_size {};
+	for (int j {sizeof(size_t)}; j >= 0; --j) { // extract size
 		uint8_t byte {};
 		for (int i {7}; i >= 0; --i) {
 			byte = (byte << 1);
-			bit_is_set = img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%3] & 1;
+			bit_is_set = img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] & 1;
+			if (bit_is_set) {
+				byte |= 1;
+			} else {
+				byte &= ~1;
+			}
+			next_pixel(img, pos);
+		}
+		file_size = static_cast<size_t>( byte << (j*7) );
+	}
+
+	std::println("file size is {}", file_size);
+
+	for (int j {}; j < file_size; ++j) {
+		uint8_t byte {};
+		for (int i {7}; i >= 0; --i) {
+			byte = (byte << 1);
+			bit_is_set = img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] & 1;
 			if (bit_is_set) {
 				byte |= 1;
 			} else {
@@ -57,3 +86,4 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 	}
 	return payload;
 }
+

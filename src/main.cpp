@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iterator>
 #include <print>
 #include <opencv2/opencv.hpp>
@@ -27,9 +28,14 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	std::string input  = result["input"].as<std::string>();
-	std::string output = result["output"].as<std::string>();
+	if (!result.count("mode")) {
+		std::println("[Usage]: Please enter a mode");
+		std::exit(0);
+	}
+
 	std::string mode   = result["mode"].as<std::string>();
+
+	std::string input  = result["input"].as<std::string>();
 	std::string dataFile   = result["data"].as<std::string>();
 
 	Image img(input);
@@ -38,6 +44,7 @@ int main(int argc, char* argv[])
 	std::unique_ptr<Embedder> embedder { std::make_unique<LSB_Embedder>()};
 	
 	if (mode == "embed") {
+		std::string output = result["output"].as<std::string>();
 		std::ifstream ifs(dataFile, std::ios::binary);
 		if (!ifs.is_open()) {
 			std::println("Error opening data file");

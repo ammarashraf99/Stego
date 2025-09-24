@@ -1,5 +1,10 @@
 # Stego
 
+## TODO
+  * [x] Put file size at the begining of the embeding
+  * [ ] Add encryption
+  * [ ] Supprot for lossy compression
+
 ## Good resources
 
 https://www.opencv-srf.com/2017/11/opencv-cpp-api.html

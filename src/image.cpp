@@ -1,18 +1,16 @@
 #include "image.hpp"
+#include <opencv2/imgcodecs.hpp>
 #include <print>
 
 Image::Image(const std::string& path)
 {
-	_mat = cv::imread(path);
+	_mat = cv::imread(path, cv::IMREAD_UNCHANGED);
 
 	if (_mat.empty())
 		throw "error loading mat\n";
 
 	_width = _mat.cols;
 	_height = _mat.rows;
-
-	std::println("width is {}", _width);
-	std::println("height is {}", _height);
 
 	_depth = [](int en) {
 		switch (en) {
@@ -34,7 +32,6 @@ Image::Image(const std::string& path)
 	}
 }
 
-
 void Image::save(const std::string& file_path) const 
 {
 	bool success = cv::imwrite(file_path, this->mat());
@@ -42,7 +39,6 @@ void Image::save(const std::string& file_path) const
 		throw "Error saving file";
 	}
 }
-
 
 const cv::Mat& Image::mat() const noexcept
 {
@@ -85,8 +81,6 @@ int Image::channels() const noexcept
 // {
 // 	return _pixels;
 // }
-
-
 
 	// std::pair<int, int> dep_chann_tmp;
 	// dep_chann_tmp = [](int en) -> std::pair<int, int> {
