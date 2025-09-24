@@ -11,7 +11,18 @@ int main(int argc, char* argv[])
 		("d,data", "Data file (for embedding)", cxxopts::value<std::string>())
 		("h,help", "Print usage");
 
-	auto result = options.parse(argc, argv);
-	stego(options, result);
+	cxxopts::ParseResult result;
+	try {
+		result = options.parse(argc, argv);
+	} catch (cxxopts::exceptions::no_such_option ex) {
+		std::println("[Usage] {}", ex.what());
+		std::exit(0);
+	}
+	try {
+		stego(options, result);
+	} catch (const char* mess) {
+		std::println("[ERROR] {}", mess);
+		std::exit(1);
+	}
 	std::exit(0);
 }

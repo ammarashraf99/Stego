@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.31.6)
 project(stego LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_compile_options(-ggdb)
 
 include(FetchContent)
 
@@ -17,16 +19,15 @@ FetchContent_MakeAvailable(cxxopts)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(stego
+add_executable(stegtool
   src/main.cpp
   src/stego.cpp
   src/image.cpp
   src/lsb_embedder.cpp
   )
 
-add_compile_options(-ggdb)
 
 find_package(OpenCV REQUIRED)
 
 # Link against cxxopts
-target_link_libraries(stego PRIVATE cxxopts ${OpenCV_LIBS})
+target_link_libraries(stegtool PRIVATE cxxopts ${OpenCV_LIBS})

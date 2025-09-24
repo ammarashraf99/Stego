@@ -2,6 +2,7 @@
 
 ## TODO
   * [x] Put file size at the begining of the embeding
+  * [ ] Perform Tests
   * [ ] Add encryption
   * [ ] Supprot for lossy compression
 

@@ -17,7 +17,6 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 	size_t file_size { data.size() };
 	bool bit_is_set{};
 
-	std::println("file size is {}", file_size);
 	
 	for (int j {sizeof(size_t)}; j >= 0; --j) { // embed size
 		uint8_t byte { static_cast<uint8_t>( file_size>>(j*7) ) };
@@ -43,7 +42,6 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 			next_pixel(img, pos);
 		}
 	}
-	std::println("last pos is {}, {}", pos.first, pos.second);
 }
 
 std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
@@ -67,8 +65,6 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 		}
 		file_size = static_cast<size_t>( byte << (j*7) );
 	}
-
-	std::println("file size is {}", file_size);
 
 	for (int j {}; j < file_size; ++j) {
 		uint8_t byte {};
