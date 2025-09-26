@@ -6,20 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_options(-ggdb)
 
-include(FetchContent)
-
-# Fetch cxxopts from GitHub
-FetchContent_Declare(
-  cxxopts
-  GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
-  GIT_TAG v3.2.0 # latest stable tag as of now
-)
-
-FetchContent_MakeAvailable(cxxopts)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-find_package(OpenCV REQUIRED)
 
 add_subdirectory(src)
 
