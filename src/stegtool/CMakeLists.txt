@@ -1,0 +1,8 @@
+add_executable(stegtool main.cpp)
+
+target_include_directories(stego
+  PUBLIC ${CMAKE_SOURCE_DIR}/include/stego
+  PUBLIC ${CMAKE_SOURCE_DIR}/include/image
+  PUBLIC ${CMAKE_SOURCE_DIR}/include/embedder
+  PUBLIC ${CMAKE_SOURCE_DIR}/include/lsb_embedder
+)

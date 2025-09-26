@@ -19,15 +19,15 @@ FetchContent_MakeAvailable(cxxopts)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(stegtool
-  src/main.cpp
-  src/stego.cpp
-  src/image.cpp
-  src/lsb_embedder.cpp
-  )
-
-
 find_package(OpenCV REQUIRED)
 
+add_subdirectory(src)
+
+target_link_libraries(image PUBLIC ${OpenCV_LIBS})
+target_link_libraries(lsb_embedder PUBLIC image)
+target_link_libraries(stego PUBLIC cxxopts PRIVATE lsb_embedder)
+
+target_link_libraries(stegtool PRIVATE stego)
+
 # Link against cxxopts
-target_link_libraries(stegtool PRIVATE cxxopts ${OpenCV_LIBS})
+target_link_libraries(stegtool PRIVATE ${OpenCV_LIBS})

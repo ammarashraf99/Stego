@@ -1,26 +1,26 @@
 [
 {
-  "directory": "/home/ammar/programming/data-hiding/build",
-  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stegtool.dir/src/main.cpp.o -c /home/ammar/programming/data-hiding/src/main.cpp",
-  "file": "/home/ammar/programming/data-hiding/src/main.cpp",
-  "output": "CMakeFiles/stegtool.dir/src/main.cpp.o"
+  "directory": "/home/ammar/programming/data-hiding/build/src/image",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/include/image -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/image.dir/image.cpp.o -c /home/ammar/programming/data-hiding/src/image/image.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/image/image.cpp",
+  "output": "src/image/CMakeFiles/image.dir/image.cpp.o"
 },
 {
-  "directory": "/home/ammar/programming/data-hiding/build",
-  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stegtool.dir/src/stego.cpp.o -c /home/ammar/programming/data-hiding/src/stego.cpp",
-  "file": "/home/ammar/programming/data-hiding/src/stego.cpp",
-  "output": "CMakeFiles/stegtool.dir/src/stego.cpp.o"
+  "directory": "/home/ammar/programming/data-hiding/build/src/lsb_embedder",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/include/lsb_embedder -I/home/ammar/programming/data-hiding/include/embedder -I/home/ammar/programming/data-hiding/include/image -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/lsb_embedder.dir/lsb_embedder.cpp.o -c /home/ammar/programming/data-hiding/src/lsb_embedder/lsb_embedder.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/lsb_embedder/lsb_embedder.cpp",
+  "output": "src/lsb_embedder/CMakeFiles/lsb_embedder.dir/lsb_embedder.cpp.o"
 },
 {
-  "directory": "/home/ammar/programming/data-hiding/build",
-  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stegtool.dir/src/image.cpp.o -c /home/ammar/programming/data-hiding/src/image.cpp",
-  "file": "/home/ammar/programming/data-hiding/src/image.cpp",
-  "output": "CMakeFiles/stegtool.dir/src/image.cpp.o"
+  "directory": "/home/ammar/programming/data-hiding/build/src/stego",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/include/stego -I/include/image -I/home/ammar/programming/data-hiding/include/stego -I/home/ammar/programming/data-hiding/include/image -I/home/ammar/programming/data-hiding/include/embedder -I/home/ammar/programming/data-hiding/include/lsb_embedder -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stego.dir/stego.cpp.o -c /home/ammar/programming/data-hiding/src/stego/stego.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/stego/stego.cpp",
+  "output": "src/stego/CMakeFiles/stego.dir/stego.cpp.o"
 },
 {
-  "directory": "/home/ammar/programming/data-hiding/build",
-  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stegtool.dir/src/lsb_embedder.cpp.o -c /home/ammar/programming/data-hiding/src/lsb_embedder.cpp",
-  "file": "/home/ammar/programming/data-hiding/src/lsb_embedder.cpp",
-  "output": "CMakeFiles/stegtool.dir/src/lsb_embedder.cpp.o"
+  "directory": "/home/ammar/programming/data-hiding/build/src/stegtool",
+  "command": "/usr/bin/c++  -I/home/ammar/programming/data-hiding/include -I/include/stego -I/include/image -I/home/ammar/programming/data-hiding/include/stego -I/home/ammar/programming/data-hiding/include/image -I/home/ammar/programming/data-hiding/include/embedder -I/home/ammar/programming/data-hiding/include/lsb_embedder -I/home/ammar/programming/data-hiding/build/_deps/cxxopts-src/include -isystem /usr/include/opencv4 -g -std=gnu++23 -ggdb -o CMakeFiles/stegtool.dir/main.cpp.o -c /home/ammar/programming/data-hiding/src/stegtool/main.cpp",
+  "file": "/home/ammar/programming/data-hiding/src/stegtool/main.cpp",
+  "output": "src/stegtool/CMakeFiles/stegtool.dir/main.cpp.o"
 }
 ]
