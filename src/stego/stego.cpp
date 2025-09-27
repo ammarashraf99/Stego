@@ -1,4 +1,6 @@
+#include "lsb_embedder.hpp"
 #include "stego.hpp"
+// private includes
 
 void stego(const cxxopts::Options& options, const cxxopts::ParseResult& result)
 {

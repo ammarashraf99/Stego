@@ -1,6 +1,4 @@
 #include "image.hpp"
-#include <opencv2/imgcodecs.hpp>
-#include <print>
 
 Image::Image(const std::string& path)
 {

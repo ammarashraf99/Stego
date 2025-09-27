@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <print>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgcodecs.hpp>
 
 class Image {
 public:

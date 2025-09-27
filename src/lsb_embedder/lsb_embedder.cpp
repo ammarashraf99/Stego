@@ -1,4 +1,7 @@
 #include "lsb_embedder.hpp"
+// private includes
+#include "crypto.hpp"
+#include <stdexcept>
 
 void LSB_Embedder::next_pixel(const Image& img, std::pair<int, int>& pos)
 {
@@ -14,10 +17,18 @@ void LSB_Embedder::next_pixel(const Image& img, std::pair<int, int>& pos)
 void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 {
 	std::pair<int, int> pos {}; // height, width
-	size_t file_size { data.size() };
+	size_t file_size;
 	bool bit_is_set{};
-
 	
+	std::string password;
+	std::print("please enter a password : ");
+	std::cin >> password;
+
+	Cipher cipher(password);
+	std::vector<uint8_t> cipher_text { cipher.encrypt(data) };
+	cipher.add_salt_iv(cipher_text);
+	file_size = cipher_text.size();
+
 	for (int j {sizeof(size_t)}; j >= 0; --j) { // embed size
 		uint8_t byte { static_cast<uint8_t>( file_size>>(j*7) ) };
 		for (int i {7}; i >= 0; --i) {
@@ -31,7 +42,7 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 		}
 	}
 	
-	for (auto& byte: data) {
+	for (auto& byte: cipher_text) {
 		for (int i {7}; i >= 0; --i) {
 			bit_is_set = (byte >> i) & 1;
 			if (bit_is_set) {
@@ -46,11 +57,12 @@ void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 
 std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 {
-	std::vector<uint8_t> payload;
+	std::vector<uint8_t> cipher_text;
 	std::pair<int, int> pos {};
 	bool bit_is_set {};
 
 	size_t file_size {};
+
 	for (int j {sizeof(size_t)}; j >= 0; --j) { // extract size
 		uint8_t byte {};
 		for (int i {7}; i >= 0; --i) {
@@ -78,8 +90,30 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 			}
 			next_pixel(img, pos);
 		}
-		payload.push_back(byte);
+		cipher_text.push_back(byte);
 	}
-	return payload;
+
+	std::vector<uint8_t> iv ( cipher_text.begin() + (cipher_text.size() - Cipher::IV_LEN),
+				  cipher_text.end());
+	cipher_text.resize(cipher_text.size() - Cipher::IV_LEN);
+	std::vector<uint8_t> salt( cipher_text.begin() + (cipher_text.size() - Cipher::SALT_LEN),
+				  cipher_text.end());
+	cipher_text.resize(cipher_text.size() - Cipher::SALT_LEN);
+
+	std::string password;
+	std::print("please enter a password : ");
+	std::cin >> password;
+
+	Cipher cipher(password, iv, salt);
+	std::vector<uint8_t> plain_text;
+	try {
+		plain_text = cipher.decrypt(cipher_text);
+	} catch(std::runtime_error mes) {
+		std::println("{}", mes.what());
+		std::println("Please try again");
+		exit(1);
+	}
+
+	return plain_text;
 }
 
