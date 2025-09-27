@@ -3,7 +3,8 @@
 ## TODO
   * [x] Put file size at the begining of the embeding
   * [ ] Perform Tests
-  * [ ] Add encryption
+  * [x] Add encryption
+  * [ ] specify the size of file and check image capacity
   * [ ] Supprot for lossy compression
 
 ## Good resources

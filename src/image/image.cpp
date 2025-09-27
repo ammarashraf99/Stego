@@ -2,11 +2,11 @@
 
 Image::Image(const std::string& path)
 {
-	std::println("[INFO] Loading input image...");
+	std::println("[INFO] loading input image...");
 	_mat = cv::imread(path, cv::IMREAD_UNCHANGED);
 
 	if (_mat.empty())
-		throw "can't loading image(cv::mat)";
+		throw "can't load image(cv::mat)";
 
 	_width = _mat.cols;
 	_height = _mat.rows;
@@ -29,10 +29,10 @@ Image::Image(const std::string& path)
 
 void Image::save(const std::string& file_path) const 
 {
-	std::println("[INFO] Saving output image...");
+	std::println("[INFO] saving output image...");
 	bool success = cv::imwrite(file_path, this->mat());
 	if (!success) {
-		throw "Error saving file";
+		throw "can't save file";
 	}
 }
 
