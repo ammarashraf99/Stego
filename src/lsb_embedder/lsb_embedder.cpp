@@ -6,37 +6,41 @@
 void LSB_Embedder::embed(Image& img, const std::vector<uint8_t>& data)
 {
 	std::pair<int, int> pos {}; // height, width
-	size_t file_size;
-	size_t max_img_cap {static_cast<size_t>(((img.height() * (img.width() - 1)) - sizeof(size_t)) / 8)};
-	std::println("[INFO] image max capacity is {} bytes", max_img_cap);
+	size_t cipher_text_size;
 	std::string password;
+	size_t max_img_cap {static_cast<size_t>(((img.height() * (img.width() - 1)) - sizeof(size_t)) / 8)};
+
+	std::println("[INFO] image max capacity is {} bytes", max_img_cap);
 	std::print("[INFO] please enter a password : ");
 	std::cin >> password;
 
 	Cipher cipher(password);
 	std::vector<uint8_t> cipher_text { cipher.encrypt(data) };
 	cipher.add_salt_iv(cipher_text);
-	file_size = cipher_text.size();
-	std::println("[INFO] cipher text size is {} bytes", file_size);
-	if (file_size > max_img_cap)  {
+	cipher_text_size = cipher_text.size();
+	std::println("[INFO] cipher text size is {} bytes", cipher_text_size);
+	if (cipher_text_size > max_img_cap)  {
 		std::println("[Usage] too large input file to embed");
 		exit(1);
 	}
 
-	embed_size(pos, img, file_size);
-	embed_cipher_text(pos, img, file_size, cipher_text);
+	embed_size(pos, img, cipher_text_size);
+	embed_cipher_text(pos, img, cipher_text_size, cipher_text);
 }
 
 std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 {
-	std::vector<uint8_t> cipher_text;
 	std::pair<int, int> pos {};
+	std::vector<uint8_t> cipher_text;
+	size_t cipher_text_size {};
+	std::string password;
 	size_t max_img_cap {static_cast<size_t>(((img.height() * (img.width() - 1)) - sizeof(size_t)) / 8)};
-	std::println("image max capacity is {} bytes", max_img_cap);
 
-	size_t file_size {};
-	extract_size(pos, img, file_size);
-	extract_cipher(pos, img, file_size, cipher_text);
+	std::println("[INFO] image max capacity is {} bytes", max_img_cap);
+
+	extract_size(pos, img, cipher_text_size);
+	cipher_text.resize(cipher_text_size);
+	extract_cipher(pos, img, cipher_text_size, cipher_text);
 
 	std::vector<uint8_t> iv ( cipher_text.begin() + (cipher_text.size() - Cipher::IV_LEN),
 				  cipher_text.end());
@@ -45,7 +49,6 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 				  cipher_text.end());
 	cipher_text.resize(cipher_text.size() - Cipher::SALT_LEN);
 
-	std::string password;
 	std::print("[INFO] please enter a password : ");
 	std::cin >> password;
 
@@ -54,8 +57,8 @@ std::vector<uint8_t> LSB_Embedder::extract(const Image& img)
 	try {
 		plain_text = cipher.decrypt(cipher_text);
 	} catch(std::runtime_error mes) {
-		std::println("{}", mes.what());
-		std::println("[ERROR] Please try again");
+		std::println("[ERROR] {}", mes.what());
+		std::println("[INFO] Please try again");
 		exit(1);
 	}
 
@@ -94,6 +97,7 @@ void LSB_Embedder::embed_cipher_text(std::pair<int, int>& pos, Image& img, const
 		       const std::vector<uint8_t>& cipher_text)
 {
 	bool bit_is_set {};
+
 	for (auto& byte: cipher_text) {
 		for (int i {7}; i >= 0; --i) {
 			bit_is_set = (byte >> i) & 1;
@@ -105,7 +109,6 @@ void LSB_Embedder::embed_cipher_text(std::pair<int, int>& pos, Image& img, const
 			next_pixel(img, pos);
 		}
 	}
-	
 }
 
 void LSB_Embedder::extract_size(std::pair<int, int>& pos, const Image& img, size_t& file_size)
@@ -124,7 +127,6 @@ void LSB_Embedder::extract_size(std::pair<int, int>& pos, const Image& img, size
 			next_pixel(img, pos);
 		}
 	}
-
 }
 
 void LSB_Embedder::extract_cipher(std::pair<int, int>& pos, const Image& img, const size_t& file_size,
@@ -132,8 +134,7 @@ void LSB_Embedder::extract_cipher(std::pair<int, int>& pos, const Image& img, co
 {
 	bool bit_is_set {};
 
-	for (int j {}; j < file_size; ++j) {
-		uint8_t byte {};
+	for (auto& byte: cipher_text) {
 		for (int i {7}; i >= 0; --i) {
 			byte = (byte << 1);
 			bit_is_set = img.mat().at<cv::Vec3b>(pos.first, pos.second)[i%img.channels()] & 1;
@@ -144,6 +145,5 @@ void LSB_Embedder::extract_cipher(std::pair<int, int>& pos, const Image& img, co
 			}
 			next_pixel(img, pos);
 		}
-		cipher_text.push_back(byte);
 	}
 }

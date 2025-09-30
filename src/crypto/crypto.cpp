@@ -102,6 +102,5 @@ std::vector<uint8_t> Cipher::derive_key(const std::string& password,
 }
 
 void Cipher::handleErrors(const std::string& msg) {
-    ERR_print_errors_fp(stderr);
-    throw std::runtime_error(msg);
+	throw std::runtime_error(msg);
 }

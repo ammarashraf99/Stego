@@ -9,7 +9,6 @@ public:
 	std::vector<uint8_t> encrypt(const std::vector<uint8_t>& plain_text);
 	std::vector<uint8_t> decrypt(const std::vector<uint8_t>& cipher_text);
 	void add_salt_iv(std::vector<uint8_t>& cipher_text);
-	// decrypt...
 
 private:
 	std::vector<uint8_t> derive_key(const std::string& password); // will generate iv, salt
